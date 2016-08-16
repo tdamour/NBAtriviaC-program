@@ -1,0 +1,241 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO; 
+
+namespace Trivia_Program
+{
+    public partial class TriviaTimeForm : Form
+    {
+        StreamReader questionFile;
+        //string variable declare. 
+        string question = ""; 
+        string choice1="", choice2="", choice3="", choice4="";
+        string answer=""; 
+        //int variables declare. 
+        int answerInt;
+        double rightAnswers; 
+        int wrongs=0; 
+        double total= 0;
+        double percent;
+
+        //to help explain why certain answer was wrong... 
+        string explain = ""; 
+         
+        public TriviaTimeForm()
+        {
+            InitializeComponent();
+        }
+
+        private void TriviaTimeForm_Load(object sender, EventArgs e)
+        {
+            try
+            {
+               
+                questionFile = File.OpenText(@"ProBasketball.txt");
+                QuestionListBox.Items.Clear();
+
+                if (!questionFile.EndOfStream)
+                {
+                    //get the first question
+       
+                    question = questionFile.ReadLine();
+                    
+
+                    //get the choices 
+                    choice1 = questionFile.ReadLine();
+                    choice2 = questionFile.ReadLine();
+                    choice3 = questionFile.ReadLine();
+                    choice4 = questionFile.ReadLine(); 
+
+                    //get answer 
+                    answer = questionFile.ReadLine(); 
+
+                    //get explain
+                    explain = questionFile.ReadLine();
+                     
+                }
+
+                //filling the question & radio Buttons 
+                QuestionListBox.Items.Add(question);
+
+                radioButton1.Text = choice1;
+                radioButton2.Text = choice2;
+                radioButton3.Text = choice3;
+                radioButton4.Text = choice4; 
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message); 
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+             //put radioButtons to unchecked... 
+            radioButton1.Checked = false;
+            radioButton2.Checked = false;
+            radioButton3.Checked = false;
+            radioButton4.Checked = false; 
+        }
+
+        private void btnSubmit_Click(object sender, EventArgs e)
+        {
+            //the answer is parsed into a Integer. 
+            answerInt = int.Parse(answer);
+
+            if (radioButton2.Checked == true && answerInt == 2)
+            {
+                //disables submit after checked
+                btnSubmit.Enabled = false;
+                MessageBox.Show("Correct");
+
+                //adds right Answers and totals 
+                rightAnswers += 1;
+                total += 1;
+
+                //add info to scoreboards 
+                scoreBoardPoints.Text = rightAnswers.ToString();
+                scoreBoardPercent.Text = (rightAnswers / total * 100) + "%";
+                //enables Next Button 
+                btnNext.Enabled = true;
+
+              
+                }
+            else if (radioButton4.Checked == true && answerInt == 4)
+            {
+                btnSubmit.Enabled = false;
+                MessageBox.Show("Correct");
+
+                rightAnswers += 1;
+                total += 1;
+
+                scoreBoardPoints.Text = rightAnswers.ToString();
+                scoreBoardPercent.Text = (rightAnswers/total *100 ) + "%"; 
+
+                btnNext.Enabled = true;
+
+        }
+            else if (radioButton1.Checked == true && answerInt == 1)
+            {
+                btnSubmit.Enabled = false;
+                MessageBox.Show("Correct");
+
+                rightAnswers += 1;
+                total += 1;
+
+                scoreBoardPoints.Text = rightAnswers.ToString();
+                scoreBoardPercent.Text = (rightAnswers / total * 100) + "%";
+
+                btnNext.Enabled = true;
+            }
+            else if (radioButton3.Checked == true && answerInt == 3)
+            {
+                btnSubmit.Enabled = false;
+                MessageBox.Show("Correct");
+
+                rightAnswers += 1;
+                total += 1;
+
+                scoreBoardPoints.Text = rightAnswers.ToString();
+                scoreBoardPercent.Text = (rightAnswers / total * 100) + "%";
+
+                btnNext.Enabled = true;
+            }
+            else
+            {
+                //disables submit button 
+                btnSubmit.Enabled = false;
+                MessageBox.Show("Wrong");
+
+                //adds wrongs and total
+                wrongs += 1;
+                total += 1; 
+               
+                //clears and adds in explain for wrong answer 
+                QuestionListBox.Items.Clear();
+                QuestionListBox.Items.Add(explain);
+               
+                //add to score 
+                scoreBoardPoints.Text = rightAnswers.ToString();
+                scoreBoardPercent.Text = (rightAnswers / total * 100) + "%";
+                btnNext.Enabled = true;
+
+            }
+          
+       }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked == false && radioButton2.Checked == false && radioButton3.Checked == false && radioButton4.Checked == false)
+            {
+                //if no radio button is selected then force user to make a choice. 
+                MessageBox.Show("You must make a selection...");
+                btnNext.Enabled = false;
+            }
+            else
+            {
+
+                if (!questionFile.EndOfStream)
+                {
+                    btnSubmit.Enabled = true;
+                    //clears previous question.. 
+
+                    QuestionListBox.Items.Clear();
+
+                    //put radioButtons to unchecked... 
+                    radioButton1.Checked = false;
+                    radioButton2.Checked = false;
+                    radioButton3.Checked = false;
+                    radioButton4.Checked = false;
+
+                    //get the next question
+                    question = questionFile.ReadLine();
+
+                    //get the choices by reading the next lines 
+                    choice1 = questionFile.ReadLine();
+                    choice2 = questionFile.ReadLine();
+                    choice3 = questionFile.ReadLine();
+                    choice4 = questionFile.ReadLine();
+
+                    //get answer by reading the next l
+                    answer = questionFile.ReadLine();
+
+                    //get explain
+                    explain = questionFile.ReadLine(); 
+                }
+
+                //filling the question & radio Buttons 
+                QuestionListBox.Items.Add(question);
+
+                radioButton1.Text = choice1;
+                radioButton2.Text = choice2;
+                radioButton3.Text = choice3;
+                radioButton4.Text = choice4;
+
+                //this makes the button Finish appear at the last question
+                if (questionFile.EndOfStream)
+                {
+                    btnNext.Visible = false;
+                    btnFinish.Visible = true;
+                }
+
+            }
+
+        }
+
+        private void btnFinish_Click(object sender, EventArgs e)
+        {
+            //this closes the form 
+            this.Close(); 
+        }
+
+    }
+}
