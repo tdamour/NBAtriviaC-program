@@ -1,0 +1,141 @@
+    //the answer is parsed into a Integer. 
+            answerInt = int.Parse(answer);
+
+            if (radioButton2.Checked == true && answerInt == 2)
+            {
+                btnSubmit.Enabled = false;
+                MessageBox.Show("Correct");
+                rightAnswers += 1;
+                total += rightAnswers;
+                calculatePercent(percent);
+                scoreBoardPoints.Text = rightAnswers.ToString();
+                scoreBoardPercent.Text = percent.ToString(); 
+                btnNext.Enabled = true;
+                if(radioButton1.Checked==false && radioButton3.Checked == false && radioButton4.Checked == false)
+                {
+                    wrongs += 1; 
+
+                    switch (wrongs)
+                    {
+                        case 1:
+                            explain = "Wilt Chamberlain has had 6 games in which he scored 70 or more points";
+                            QuestionListBox.Items.Clear();
+                            QuestionListBox.Items.Add(explain);
+                            break;
+                        case 2:
+                            explain = "The Baltimore Bullets remains the only defunct team to win a championship";
+                            QuestionListBox.Items.Clear();
+                            QuestionListBox.Items.Add(explain);
+                            break;
+                           default:
+                            break;
+                    }
+                    total += wrongs;
+                    calculatePercent(percent);
+                    scoreBoardPoints.Text = rightAnswers.ToString();
+                    scoreBoardPercent.Text = percent.ToString();
+                    btnNext.Enabled = true;
+                }
+            else if (radioButton4.Checked == true && answerInt == 4)
+            {
+                btnSubmit.Enabled = false;
+                MessageBox.Show("Correct");
+                rightAnswers += 1;
+                total += rightAnswers;
+                calculatePercent(percent); 
+                scoreBoardPoints.Text = rightAnswers.ToString();
+                scoreBoardPercent.Text = percent.ToString();
+                btnNext.Enabled = true;
+                    if(radioButton1.Checked == false && radioButton2.Checked ==false && radioButton3.Checked == false)
+                    {
+                        wrongs += 1; 
+
+                        explain = "It's 6 OT's in 1951 between the Indy Olympians & Rochester Royals";
+                        QuestionListBox.Items.Clear();
+                        QuestionListBox.Items.Add(explain);
+                    }
+                    total += wrongs;
+                    calculatePercent(percent);
+                    scoreBoardPoints.Text = rightAnswers.ToString();
+                    scoreBoardPercent.Text = percent.ToString();
+                    btnNext.Enabled = true;
+                }
+            else if (radioButton1.Checked == true && answerInt == 1)
+            {
+                btnSubmit.Enabled = false;
+                MessageBox.Show("Correct");
+                rightAnswers += 1;
+                total += rightAnswers;
+                calculatePercent(percent);
+                scoreBoardPoints.Text = rightAnswers.ToString();
+                scoreBoardPercent.Text = percent.ToString();
+                btnNext.Enabled = true;
+               if (radioButton2.Checked == false && radioButton3.Checked == false && radioButton4.Checked == false)
+                    {
+                        wrongs += 1; 
+                        explain = "The 1971-72 Lakers still have the record of 33 wins in a row";
+                        QuestionListBox.Items.Clear();
+                        QuestionListBox.Items.Add(explain);
+                    }
+
+            }
+            else
+            {
+                btnSubmit.Enabled = false;
+                MessageBox.Show("Correct");
+                rightAnswers += 1;
+                total += rightAnswers;
+                calculatePercent(percent);
+                scoreBoardPoints.Text = rightAnswers.ToString();
+                scoreBoardPercent.Text = percent.ToString();
+                btnNext.Enabled = true;
+            }
+                else if(radioButton1.Checked == false && radioButton2.Checked == false && radioButton3.Checked == false && radioButton4.Checked ==false)
+            {
+                MessageBox.Show("You must make a selection...");
+                btnNext.Enabled = false; 
+            }
+            else
+            {
+                btnSubmit.Enabled = false;
+                MessageBox.Show("Wrong");
+
+                wrongs += 1; 
+
+                switch (wrongs)
+                {
+                    case 1:
+                        explain = "Wilt Chamberlain has had 6 games in which he scored 70 or more points";
+                        QuestionListBox.Items.Clear(); 
+                        QuestionListBox.Items.Add(explain);
+                        break;
+                    case 2:
+                        explain = "It's 6 OT's in 1951 between the Indy Olympians & Rochester Royals";
+                        QuestionListBox.Items.Clear();
+                        QuestionListBox.Items.Add(explain);
+                        break;
+                    case 3:
+                        explain = "The 1971-72 Lakers still have the record of 33 wins in a row";
+                        QuestionListBox.Items.Clear();
+                        QuestionListBox.Items.Add(explain);
+                        break;
+                    case 4:
+                        explain = "Hakeem Olajuwon holds the record with 3,830 blocks in his career ";
+                        QuestionListBox.Items.Clear();
+                        QuestionListBox.Items.Add(explain);
+                        break;
+                    case 5:
+                        explain = "The Baltimore Bullets remains the only defunct team to win a championship";
+                        QuestionListBox.Items.Clear();
+                        QuestionListBox.Items.Add(explain);
+                        break;
+                    default:
+                        break; 
+                }
+                total += wrongs;
+                calculatePercent(percent);
+                scoreBoardPoints.Text = rightAnswers.ToString(); 
+                scoreBoardPercent.Text = percent.ToString();
+                btnNext.Enabled = true;
+            }
+        }
